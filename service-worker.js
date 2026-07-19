@@ -3,9 +3,11 @@
 // instalado no navegador do usuário, causando cache de versões antigas do site.
 // Ele se auto-desinstala e limpa todos os caches, garantindo que o navegador
 // sempre busque a versão mais recente dos arquivos direto do servidor.
+//
+// IMPORTANTE: este SW NÃO intercepta requisições (sem "fetch" handler) e
+// NÃO força recarregamento de página, para evitar loops de reload/flicker.
 
 self.addEventListener('install', function () {
-  // Ativa imediatamente, sem esperar as abas antigas fecharem
   self.skipWaiting();
 });
 
@@ -18,23 +20,8 @@ self.addEventListener('activate', function (event) {
         return caches.delete(name);
       }));
 
-      // Assume controle imediato de todas as abas abertas
-      await self.clients.claim();
-
       // Desregistra este próprio Service Worker
       await self.registration.unregister();
-
-      // Força o recarregamento de todas as abas abertas do site,
-      // para que peguem a versão nova direto do servidor
-      var allClients = await self.clients.matchAll({ type: 'window' });
-      allClients.forEach(function (client) {
-        client.navigate(client.url);
-      });
     })()
   );
-});
-
-// Nunca serve nada do cache — sempre busca da rede
-self.addEventListener('fetch', function (event) {
-  event.respondWith(fetch(event.request));
 });
