@@ -39,6 +39,12 @@
 .space-y-12.animate-in.slide-in-from-bottom-6:has(> .fixed.inset-0.z-\[100\]) {
   transform: none !important;
 }
+.space-y-12 > .fixed.inset-0.z-\[100\] {
+  top: -100vh !important;
+  right: -100vw !important;
+  bottom: -100vh !important;
+  left: -100vw !important;
+}
 body:has(.space-y-12 > .fixed.inset-0.z-\[100\]) main {
   overflow: visible !important;
   z-index: 50;
