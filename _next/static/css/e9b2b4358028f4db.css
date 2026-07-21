@@ -35,6 +35,15 @@
   color: #fdc700 !important;
 }
 
+/* Keep the STL purchase modal anchored to, and visible across, the full viewport. */
+.space-y-12.animate-in.slide-in-from-bottom-6:has(> .fixed.inset-0.z-\[100\]) {
+  transform: none !important;
+}
+body:has(.space-y-12 > .fixed.inset-0.z-\[100\]) main {
+  overflow: visible !important;
+  z-index: 50;
+}
+
 /* Custom Styles for Bonus Items */
 .bg-bonus-badge-yellow {
   background-color: #fdc700 !important;
